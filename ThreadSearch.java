@@ -2,14 +2,18 @@ import framework.Value;
 import values.LinearValue;
 
 public class ThreadSearch {
-	//public static final int countThreads = 4;
 	public static int run;
+	public final static int n = 12;
+	public final static int K = 5;
+	public static double bestF = 0; //Р§РµРј РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ Р»СѓС‡С€РёР№ РєСЂРёС‚РµСЂРёР№???
+
 	public static void main(String[] args) {
 		//SearchThread thread1 = new SearchThread();
 		//thread1.start();
 		//ArrayList<SearchThread> threads = new ArrayList<SearchThread>();
-		Value value = new LinearValue(5);
-		int n = 12, var[], best[];
+		Value value = new LinearValue(K);
+		int var[];
+		int best[];
 		double time = 0;
 		
 		
@@ -35,7 +39,7 @@ public class ThreadSearch {
 		}
 		
 		time = (System.currentTimeMillis() - time) /1000;
-		System.out.println("Лучший результат: f = " + value.calc(best) + "; time = " + time + " s. Массив: ");
+		System.out.println("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: f = " + value.calc(best) + "; time = " + time + " s. пїЅпїЅпїЅпїЅпїЅпїЅ: ");
 		for(int i = 0; i < best.length; i++)
 			System.out.print(best[i] + ", ");
 		
@@ -55,7 +59,7 @@ public class ThreadSearch {
 		}
 		
 		time = (System.currentTimeMillis() - time) /1000;
-		System.out.println("\nВ один поток: лучший результат: f = " + value.calc(best) + "; time = " + time + " s. Массив: ");
+		System.out.println("\nпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: f = " + value.calc(best) + "; time = " + time + " s. пїЅпїЅпїЅпїЅпїЅпїЅ: ");
 		for(int i = 0; i < best.length; i++)
 			System.out.print(best[i] + ", ");
 	}

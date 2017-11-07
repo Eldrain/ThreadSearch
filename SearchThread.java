@@ -19,7 +19,7 @@ public class SearchThread extends Thread {
 		try {
 			search(set);
 		} catch (Exception e) {
-			System.out.println("Ошибка!!! Копирование массивов разной длины!");
+			System.out.println("пїЅпїЅпїЅпїЅпїЅпїЅ!!! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
 			System.exit(1);
 		}
 		ThreadSearch.run--;
@@ -27,10 +27,12 @@ public class SearchThread extends Thread {
 	
 	private void search(int set) throws Exception {
 		if(set == var.length) {
+			double f = value.calc(var);
 			synchronized(best) {
-				double f = value.calc(var);
-				if(value.compare(f, value.calc(best)))
-					ThreadSearch.copy(best, var);	
+				if(value.compare(f, ThreadSearch.bestF)) {
+                    ThreadSearch.copy(best, var);
+                    ThreadSearch.bestF = f;
+                }
 			}
 		} else {
 			int j = 0;
