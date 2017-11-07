@@ -9,7 +9,8 @@ public class ThreadSearch {
 		//thread1.start();
 		//ArrayList<SearchThread> threads = new ArrayList<SearchThread>();
 		Value value = new LinearValue(5);
-		int n = 10, var[], best[];
+		int n = 12, var[], best[];
+		double time = 0;
 		
 		
 		//for(int i = 0; i < countThreads; i++)
@@ -18,6 +19,7 @@ public class ThreadSearch {
 		var = new int[n];
 		best = new int[n];
 		run = n;
+		time = System.currentTimeMillis();
 		for(int i = 0; i < n; i++) {
 			var[0] = i + 1;
 			new SearchThread(value, var, best, 1).start();
@@ -32,7 +34,28 @@ public class ThreadSearch {
 			}
 		}
 		
-		System.out.println("Лучший результат: f = " + value.calc(best) + "; Массив: ");
+		time = (System.currentTimeMillis() - time) /1000;
+		System.out.println("Лучший результат: f = " + value.calc(best) + "; time = " + time + " s. Массив: ");
+		for(int i = 0; i < best.length; i++)
+			System.out.print(best[i] + ", ");
+		
+		var[0] = 0;
+		run = 1;
+		
+		time = System.currentTimeMillis();
+		
+		new SearchThread(value, var, best, 0).start();
+		while(run != 0) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		time = (System.currentTimeMillis() - time) /1000;
+		System.out.println("\nВ один поток: лучший результат: f = " + value.calc(best) + "; time = " + time + " s. Массив: ");
 		for(int i = 0; i < best.length; i++)
 			System.out.print(best[i] + ", ");
 	}
