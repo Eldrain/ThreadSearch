@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import framework.Value;
 import values.LinearValue;
 
@@ -8,58 +10,50 @@ public class ThreadSearch {
 	public static double bestF = 0; //Р§РµРј РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ Р»СѓС‡С€РёР№ РєСЂРёС‚РµСЂРёР№???
 
 	public static void main(String[] args) {
-		//SearchThread thread1 = new SearchThread();
-		//thread1.start();
-		//ArrayList<SearchThread> threads = new ArrayList<SearchThread>();
+		ArrayList<SearchThread> threads = new ArrayList<SearchThread>();
 		Value value = new LinearValue(K);
 		int var[];
 		int best[];
 		double time = 0;
 		
-		
-		//for(int i = 0; i < countThreads; i++)
-		//	threads.add(new Search)
-		
 		var = new int[n];
 		best = new int[n];
 		run = n;
 		time = System.currentTimeMillis();
+		
 		for(int i = 0; i < n; i++) {
+			SearchThread st = new SearchThread(value, var, best, 1);
+			st.start();
 			var[0] = i + 1;
-			new SearchThread(value, var, best, 1).start();
+			threads.add(st);
 		}
 		
-		while(run != 0) {
+		for(SearchThread thrd : threads)
 			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				thrd.join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
-		}
 		
 		time = (System.currentTimeMillis() - time) /1000;
-		System.out.println("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: f = " + value.calc(best) + "; time = " + time + " s. пїЅпїЅпїЅпїЅпїЅпїЅ: ");
+		System.out.println("\n Лучшее решение в несколько потоков: f = " + value.calc(best) + "; time = " + time + " s. Массив: ");
 		for(int i = 0; i < best.length; i++)
 			System.out.print(best[i] + ", ");
 		
 		var[0] = 0;
-		run = 1;
+		SearchThread st = new SearchThread(value, var, best, 0);
 		
 		time = System.currentTimeMillis();
+		st.start();
 		
-		new SearchThread(value, var, best, 0).start();
-		while(run != 0) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			st.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		
 		time = (System.currentTimeMillis() - time) /1000;
-		System.out.println("\nпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: f = " + value.calc(best) + "; time = " + time + " s. пїЅпїЅпїЅпїЅпїЅпїЅ: ");
+		System.out.println("\nЛучшее решение в один поток: f = " + value.calc(best) + "; time = " + time + " s. Массив: ");
 		for(int i = 0; i < best.length; i++)
 			System.out.print(best[i] + ", ");
 	}
