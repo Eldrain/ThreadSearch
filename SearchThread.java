@@ -18,20 +18,19 @@ public class SearchThread extends Thread {
 	public void run() {
 		try {
 			search(set);
-		} catch (Exception e) {
-			System.out.println("������!!! ����������� �������� ������ �����!");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Ошибка!!!");
 			System.exit(1);
 		}
-		ThreadSearch.run--;
 	}
 	
-	private void search(int set) throws Exception {
+	private void search(int set) throws ArrayIndexOutOfBoundsException {
 		if(set == var.length) {
 			double f = value.calc(var);
 			synchronized(best) {
-				if(value.compare(f, ThreadSearch.bestF)) {
-                    ThreadSearch.copy(best, var);
-                    ThreadSearch.bestF = f;
+				if(value.compare(f, Resources.bestF)) {
+                    Resources.copy(best, var);
+					Resources.bestF = f;
                 }
 			}
 		} else {
